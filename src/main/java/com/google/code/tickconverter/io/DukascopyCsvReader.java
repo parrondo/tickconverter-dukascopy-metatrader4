@@ -78,6 +78,8 @@ public class DukascopyCsvReader
     public void read()
         throws FileNotFoundException, IOException, ParseException
     {
+        SimpleDateFormat dateFormat = new SimpleDateFormat( "dd.MM.yyyy HH:mm:ss.SSS" );
+        GregorianCalendar cal = new GregorianCalendar();
         try (CSVReader reader = new CSVReader( new FileReader( filename ) ))
         {
             String[] line;
@@ -86,8 +88,6 @@ public class DukascopyCsvReader
                 String withoutSep = StringUtils.remove( line[1], "." );
                 if ( StringUtils.isNumeric( withoutSep ) )
                 {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat( "dd.MM.yyyy HH:mm:ss.SSS" );
-                    GregorianCalendar cal = new GregorianCalendar();
                     cal.setTime( dateFormat.parse( line[0] ) );
                     DateTime dateTime = new DateTime( cal );
                     dukaQueue.offer( new DukascopyBean( dateTime, Double.parseDouble( line[1] ),

@@ -156,6 +156,16 @@ public class MetatraderConverter
     }
 
     /**
+     * Returns a boolean value to query if this object has elements in his {@link HashSet}
+     * 
+     * @return
+     */
+    public boolean hasElements()
+    {
+        return 0 < validTickSet.size();
+    }
+
+    /**
      * Remove all entries of the current set
      */
     public void clearTicks()

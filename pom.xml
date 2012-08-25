@@ -26,6 +26,12 @@
 				<configuration>
 					<header>header.txt</header>
 					<strictCheck>true</strictCheck>
+					<excludes>
+						<exclude>LICENSE.txt</exclude>
+						<exclude>**/*.csv</exclude>
+						<exclude>.gitignore</exclude>
+					</excludes>
+					<useDefaultExcludes>true</useDefaultExcludes>
 				</configuration>
 				<executions>
 					<execution>

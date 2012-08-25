@@ -112,6 +112,11 @@
 			<artifactId>opencsv</artifactId>
 			<version>2.3</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
 	</dependencies>
 	<url>https://code.google.com/p/tickconverter-dukascopy-metatrader4/</url>
 	<description>Historical tick data conversion for use in MetaTrader4</description>

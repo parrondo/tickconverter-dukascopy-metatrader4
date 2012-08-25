@@ -72,6 +72,7 @@ public class MetatraderCsvWriter
         try (CSVWriter writer = new CSVWriter( new FileWriter( filename ), ',', CSVWriter.NO_QUOTE_CHARACTER ))
         {
             DecimalFormat format = new DecimalFormat( "#####0.00000", new DecimalFormatSymbols( Locale.US ) );
+            DecimalFormat secondFormat = new DecimalFormat( "#####0", new DecimalFormatSymbols( Locale.US ) );
             while ( true )
             {
                 IMetatraderRO trader = traderQueue.poll( 5, TimeUnit.SECONDS );
@@ -85,8 +86,7 @@ public class MetatraderCsvWriter
                     line[3] = format.format( trader.getMax() );
                     line[4] = format.format( trader.getMin() );
                     line[5] = format.format( trader.getClose() );
-                    line[6] = format.format( trader.getVolume() );
-
+                    line[6] = secondFormat.format( Math.round( trader.getVolume() ) );
                     writer.writeNext( line );
                 }
                 else

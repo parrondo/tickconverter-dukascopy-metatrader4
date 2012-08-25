@@ -16,7 +16,58 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
  * OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package com.google.code.tickconverter.bean;
+
+import org.joda.time.DateTime;
+
 /**
+ * This interface is an immutable (read-only) interface of a metatrader object.
+ * 
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
-package com.google.code.tickconverter.bean;
+public interface IMetatraderRO
+{
+
+    /**
+     * Get the timestamp of this object.
+     * 
+     * @return the timeStamp
+     */
+    DateTime getTimeStamp();
+
+    /**
+     * Return the open value.
+     * 
+     * @return the open
+     */
+    double getOpen();
+
+    /**
+     * Return the max value.
+     * 
+     * @return the max
+     */
+    double getMax();
+
+    /**
+     * Return the min value of this object.
+     * 
+     * @return the min
+     */
+    double getMin();
+
+    /**
+     * Return the close value of this object.
+     * 
+     * @return the close
+     */
+    double getClose();
+
+    /**
+     * Return the total volume of this object.
+     * 
+     * @return the volume
+     */
+    double getVolume();
+
+}

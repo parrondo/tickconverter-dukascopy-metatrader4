@@ -16,7 +16,39 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
  * OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package com.google.code.tickconverter.util;
+
+import java.util.Comparator;
+
+import com.google.code.tickconverter.bean.IDukascopyRO;
+
 /**
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
-package com.google.code.tickconverter.bean;
+public final class DukascopyAskBidComparator
+    implements Comparator<IDukascopyRO>
+{
+
+    /*
+     * (non-Javadoc)
+     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+     */
+    @Override
+    public int compare( final IDukascopyRO o1, final IDukascopyRO o2 )
+    {
+        double valueFirst = ( o1.getAsk() + o1.getBid() ) / 2;
+        double valueSecond = ( o2.getAsk() + o2.getBid() ) / 2;
+        double diff = valueFirst - valueSecond;
+
+        if ( diff < 0 )
+        {
+            return -1;
+        }
+        if ( diff > 0 )
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+}

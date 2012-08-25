@@ -16,7 +16,32 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
  * OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package com.google.code.tickconverter.application;
+
+import java.util.concurrent.LinkedBlockingQueue;
+
+import com.google.code.tickconverter.bean.IDukascopyRO;
+import com.google.code.tickconverter.bean.IMetatraderRO;
+import com.google.code.tickconverter.convert.ConvertAdapter;
+import com.google.code.tickconverter.io.DukascopyCsvReader;
+import com.google.code.tickconverter.io.MetatraderCsvWriter;
+
 /**
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
-package com.google.code.tickconverter.bean;
+public final class Application
+{
+
+    public static void main( final String[] args )
+    {
+        LinkedBlockingQueue<IDukascopyRO> dukasQueue = new LinkedBlockingQueue<>();
+        LinkedBlockingQueue<IMetatraderRO> metatraderQueue = new LinkedBlockingQueue<>();
+        Thread reader = new Thread( new DukascopyCsvReader( dukasQueue, "CADJPY_tick.csv" ) );
+        Thread convert = new Thread( new ConvertAdapter( dukasQueue, metatraderQueue ) );
+        Thread writer = new Thread( new MetatraderCsvWriter( metatraderQueue, "minute.csv" ) );
+
+        reader.start();
+        convert.start();
+        writer.start();
+    }
+}

@@ -16,58 +16,29 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
  * OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.google.code.tickconverter.bean;
+package com.google.code.tickconverter.util;
 
-import org.joda.time.DateTime;
+import java.util.Comparator;
+
+import com.google.code.tickconverter.bean.IDukascopyRO;
 
 /**
- * This interface is an immutable (read-only) interface of a metatrader object.
+ * This class represent a {@link Comparator} of the Interface {@link IDukascopyRO} and compare the
+ * {@link IDukascopyRO#getTimeStamp()} values.
  * 
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
-public interface IMetatraiderRO
+public final class DukascopyDateComparator
+    implements Comparator<IDukascopyRO>
 {
 
-    /**
-     * Get the timestamp of this object.
-     * 
-     * @return the timeStamp
+    /*
+     * (non-Javadoc)
+     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
-    DateTime getTimeStamp();
-
-    /**
-     * Return the open value.
-     * 
-     * @return the open
-     */
-    double getOpen();
-
-    /**
-     * Return the max value.
-     * 
-     * @return the max
-     */
-    double getMax();
-
-    /**
-     * Return the min value of this object.
-     * 
-     * @return the min
-     */
-    double getMin();
-
-    /**
-     * Return the close value of this object.
-     * 
-     * @return the close
-     */
-    double getClose();
-
-    /**
-     * Return the total volume of this object.
-     * 
-     * @return the volume
-     */
-    double getVolume();
-
+    @Override
+    public int compare( final IDukascopyRO o1, final IDukascopyRO o2 )
+    {
+        return o1.getTimeStamp().compareTo( o2.getTimeStamp() );
+    }
 }

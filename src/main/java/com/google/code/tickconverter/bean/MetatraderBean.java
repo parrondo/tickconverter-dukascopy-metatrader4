@@ -31,7 +31,7 @@ import org.joda.time.DateTime;
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
 public class MetatraderBean
-    implements IMetatraiderRO
+    implements IMetatraderRO
 {
     private DateTime timeStamp;
 
@@ -44,6 +44,36 @@ public class MetatraderBean
     private double close;
 
     private double volume;
+
+    /**
+     * Standard constructor to instance a new {@link MetatraderBean} object with the current time and zero values.
+     */
+    public MetatraderBean()
+    {
+        timeStamp = new DateTime();
+        open = 0;
+        max = 0;
+        min = 0;
+        close = 0;
+        volume = 0;
+    }
+
+    /**
+     * Create a new {@link MetatraderBean} with an existing {@link IMetatraderRO} object and copy the information to the
+     * owned attributes
+     * 
+     * @param traderObject <br>
+     *            an object who implements the {@link IMetatraderRO} to copy the information
+     */
+    public MetatraderBean( final IMetatraderRO traderObject )
+    {
+        timeStamp = traderObject.getTimeStamp();
+        open = traderObject.getOpen();
+        max = traderObject.getMax();
+        min = traderObject.getMin();
+        close = traderObject.getClose();
+        volume = traderObject.getVolume();
+    }
 
     /*
      * (non-Javadoc)

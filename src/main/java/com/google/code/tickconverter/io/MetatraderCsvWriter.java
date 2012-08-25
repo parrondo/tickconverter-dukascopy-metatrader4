@@ -28,12 +28,12 @@ import java.util.concurrent.TimeUnit;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
-import com.google.code.tickconverter.bean.IMetatraiderRO;
+import com.google.code.tickconverter.bean.IMetatraderRO;
 
 /**
- * This class take the {@link IMetatraiderRO} out of the {@link BlockingQueue} and write this object to another csv
- * file. The class {@link MetatraderCsvWriter} implements additional the interface {@link Runnable} to write line by
- * line the information in a {@link Thread}.
+ * This class take the {@link IMetatraderRO} out of the {@link BlockingQueue} and write this object to another csv file.
+ * The class {@link MetatraderCsvWriter} implements additional the interface {@link Runnable} to write line by line the
+ * information in a {@link Thread}.
  * 
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
@@ -41,7 +41,7 @@ public class MetatraderCsvWriter
     implements Runnable
 {
 
-    private final BlockingQueue<IMetatraiderRO> traderQueue;
+    private final BlockingQueue<IMetatraderRO> traderQueue;
 
     private final String filename;
 
@@ -49,19 +49,19 @@ public class MetatraderCsvWriter
      * Standard constructor to instance an object of this class.
      * 
      * @param traderQueue <br>
-     *            the {@link BlockingQueue} to take the {@link IMetatraiderRO} objects and write down into the
-     *            define csv file.
+     *            the {@link BlockingQueue} to take the {@link IMetatraderRO} objects and write down into the define csv
+     *            file.
      * @param filename <br>
      *            the full path of the output file location.
      */
-    public MetatraderCsvWriter( final BlockingQueue<IMetatraiderRO> traderQueue, final String filename )
+    public MetatraderCsvWriter( final BlockingQueue<IMetatraderRO> traderQueue, final String filename )
     {
         this.traderQueue = traderQueue;
         this.filename = filename;
     }
 
     /**
-     * Process method to write the {@link IMetatraiderRO} objects into the csv file ({@link #filename}).
+     * Process method to write the {@link IMetatraderRO} objects into the csv file ({@link #filename}).
      * 
      * @throws IOException will throws if any other I/O errors where occur of the process
      * @throws InterruptedException will throws if the method will interrupt in the poll phase
@@ -69,12 +69,13 @@ public class MetatraderCsvWriter
     public void write()
         throws IOException, InterruptedException
     {
-        try (CSVWriter writer = new CSVWriter( new FileWriter( filename ) ))
+        try (CSVWriter writer = new CSVWriter( new FileWriter( filename ), ',', CSVWriter.NO_QUOTE_CHARACTER ))
         {
             DecimalFormat format = new DecimalFormat( "#####0.00000", new DecimalFormatSymbols( Locale.US ) );
+            DecimalFormat secondFormat = new DecimalFormat( "#####0", new DecimalFormatSymbols( Locale.US ) );
             while ( true )
             {
-                IMetatraiderRO trader = traderQueue.poll( 5, TimeUnit.SECONDS );
+                IMetatraderRO trader = traderQueue.poll( 5, TimeUnit.SECONDS );
 
                 if ( null != trader )
                 {
@@ -85,8 +86,7 @@ public class MetatraderCsvWriter
                     line[3] = format.format( trader.getMax() );
                     line[4] = format.format( trader.getMin() );
                     line[5] = format.format( trader.getClose() );
-                    line[6] = format.format( trader.getVolume() );
-
+                    line[6] = secondFormat.format( Math.round( trader.getVolume() ) );
                     writer.writeNext( line );
                 }
                 else

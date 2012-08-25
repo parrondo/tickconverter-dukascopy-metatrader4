@@ -16,7 +16,34 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
  * OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package com.google.code.tickconverter.convert;
+
 /**
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
-package com.google.code.tickconverter.bean;
+public class InvalidTimeException
+    extends Exception
+{
+
+    private static final long serialVersionUID = 698097931949182635L;
+
+    public InvalidTimeException()
+    {
+        super();
+    }
+
+    public InvalidTimeException( final String message, final Throwable cause )
+    {
+        super( message, cause );
+    }
+
+    public InvalidTimeException( final String s )
+    {
+        super( s );
+    }
+
+    public InvalidTimeException( final Throwable cause )
+    {
+        super( cause );
+    }
+}

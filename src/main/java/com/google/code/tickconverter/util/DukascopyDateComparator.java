@@ -10,7 +10,7 @@ import com.google.code.tickconverter.bean.IDukascopyRO;
  * 
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
-public final class DukascopyDateComperator
+public final class DukascopyDateComparator
     implements Comparator<IDukascopyRO>
 {
 

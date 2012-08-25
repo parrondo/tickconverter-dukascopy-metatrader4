@@ -31,9 +31,9 @@ import au.com.bytecode.opencsv.CSVWriter;
 import com.google.code.tickconverter.bean.IMetatraderRO;
 
 /**
- * This class take the {@link IMetatraderRO} out of the {@link BlockingQueue} and write this object to another csv
- * file. The class {@link MetatraderCsvWriter} implements additional the interface {@link Runnable} to write line by
- * line the information in a {@link Thread}.
+ * This class take the {@link IMetatraderRO} out of the {@link BlockingQueue} and write this object to another csv file.
+ * The class {@link MetatraderCsvWriter} implements additional the interface {@link Runnable} to write line by line the
+ * information in a {@link Thread}.
  * 
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
@@ -49,8 +49,8 @@ public class MetatraderCsvWriter
      * Standard constructor to instance an object of this class.
      * 
      * @param traderQueue <br>
-     *            the {@link BlockingQueue} to take the {@link IMetatraderRO} objects and write down into the
-     *            define csv file.
+     *            the {@link BlockingQueue} to take the {@link IMetatraderRO} objects and write down into the define csv
+     *            file.
      * @param filename <br>
      *            the full path of the output file location.
      */
@@ -69,7 +69,7 @@ public class MetatraderCsvWriter
     public void write()
         throws IOException, InterruptedException
     {
-        try (CSVWriter writer = new CSVWriter( new FileWriter( filename ) ))
+        try (CSVWriter writer = new CSVWriter( new FileWriter( filename ), ',', CSVWriter.NO_QUOTE_CHARACTER ))
         {
             DecimalFormat format = new DecimalFormat( "#####0.00000", new DecimalFormatSymbols( Locale.US ) );
             while ( true )

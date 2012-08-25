@@ -25,7 +25,7 @@ import org.joda.time.DateTime;
  * 
  * @author Karsten Schulz <a href="mailto:lennylinux.ks@googlmail.com">(lennylinux.ks@googlmail.com)</a>
  */
-public interface IMetatraiderBeanRO
+public interface IMetatraiderRO
 {
 
     /**

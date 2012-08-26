@@ -106,7 +106,7 @@ public final class CommandLineProperties
     private void printHelp()
     {
         HelpFormatter format = new HelpFormatter();
-        format.printHelp( "tradeconverter [options]", options );
+        format.printHelp( "java -jar tradeconverter-1.0.jar [options]", options );
     }
 
     /**

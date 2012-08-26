@@ -33,6 +33,7 @@ import com.google.code.tickconverter.bean.IDukascopyRO;
 import com.google.code.tickconverter.bean.IMetatraderRO;
 import com.google.code.tickconverter.util.DukascopyAskBidComparator;
 import com.google.code.tickconverter.util.DukascopyDateComparator;
+import com.google.code.tickconverter.util.LoggerUtils;
 
 /**
  * This class represent the converter between {@link IDukascopyRO} objects and {@link IMetatraderRO}. All
@@ -61,6 +62,7 @@ public class MetatraderConverter
         validTickSet = new HashSet<>();
         this.period = period;
         currentInterval = new MutableInterval( start, period );
+        LoggerUtils.createInfoLog( "create interval: " + currentInterval );
     }
 
     @Override
@@ -147,6 +149,7 @@ public class MetatraderConverter
         if ( currentInterval.contains( object.getTimeStamp() ) )
         {
             validTickSet.add( object );
+            LoggerUtils.createDebugLog( "add valid object: " + object );
         }
         else
         {
@@ -181,5 +184,6 @@ public class MetatraderConverter
         clearTicks();
         currentInterval.setStart( currentInterval.getEnd() );
         currentInterval.setPeriodAfterStart( period );
+        LoggerUtils.createDebugLog( "new interval: " + currentInterval );
     }
 }

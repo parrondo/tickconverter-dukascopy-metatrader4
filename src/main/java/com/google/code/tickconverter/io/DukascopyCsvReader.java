@@ -33,6 +33,7 @@ import au.com.bytecode.opencsv.CSVReader;
 
 import com.google.code.tickconverter.bean.DukascopyBean;
 import com.google.code.tickconverter.bean.IDukascopyRO;
+import com.google.code.tickconverter.util.LoggerUtils;
 
 /**
  * This class works like a standard reader class. The {@link #read()}-method of {@link DukascopyCsvReader} read line by
@@ -78,6 +79,7 @@ public class DukascopyCsvReader
     public void read()
         throws FileNotFoundException, IOException, ParseException
     {
+        LoggerUtils.createInfoLog( "read from file: " + filename );
         SimpleDateFormat dateFormat = new SimpleDateFormat( "dd.MM.yyyy HH:mm:ss.SSS" );
         GregorianCalendar cal = new GregorianCalendar();
         try (CSVReader reader = new CSVReader( new FileReader( filename ) ))
@@ -86,13 +88,16 @@ public class DukascopyCsvReader
             while ( ( line = reader.readNext() ) != null )
             {
                 String withoutSep = StringUtils.remove( line[1], "." );
+                LoggerUtils.createDebugLog( "second token without separator: " + withoutSep );
                 if ( StringUtils.isNumeric( withoutSep ) )
                 {
                     cal.setTime( dateFormat.parse( line[0] ) );
                     DateTime dateTime = new DateTime( cal );
-                    dukaQueue.offer( new DukascopyBean( dateTime, Double.parseDouble( line[1] ),
-                                                        Double.parseDouble( line[2] ), Double.parseDouble( line[3] ),
-                                                        Double.parseDouble( line[4] ) ) );
+                    IDukascopyRO bean =
+                        new DukascopyBean( dateTime, Double.parseDouble( line[1] ), Double.parseDouble( line[2] ),
+                                           Double.parseDouble( line[3] ), Double.parseDouble( line[4] ) );
+                    dukaQueue.offer( bean );
+                    LoggerUtils.createDebugLog( "offer new element in queue:" + bean );
                 }
             }
         }
@@ -103,11 +108,12 @@ public class DukascopyCsvReader
     {
         try
         {
+            LoggerUtils.createInfoLog( "start thread to read the csv file" );
             read();
         }
         catch ( IOException | ParseException e )
         {
-            e.printStackTrace();
+            LoggerUtils.createErrorLog( "there is an error by parsing the csv file: " + filename, e );
         }
     }
 }

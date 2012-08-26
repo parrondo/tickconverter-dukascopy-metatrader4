@@ -22,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import au.com.bytecode.opencsv.CSVWriter;
 
 import com.google.code.tickconverter.bean.IMetatraderRO;
+import com.google.code.tickconverter.util.LoggerUtils;
 
 /**
  * This class take the {@link IMetatraderRO} out of the {@link BlockingQueue} and write this object to another csv file.
@@ -69,6 +71,7 @@ public class MetatraderCsvWriter
     public void write()
         throws IOException, InterruptedException
     {
+        LoggerUtils.createInfoLog( "write to file: " + filename );
         try (CSVWriter writer = new CSVWriter( new FileWriter( filename ), ',', CSVWriter.NO_QUOTE_CHARACTER ))
         {
             DecimalFormat format = new DecimalFormat( "#####0.00000", new DecimalFormatSymbols( Locale.US ) );
@@ -76,7 +79,7 @@ public class MetatraderCsvWriter
             while ( true )
             {
                 IMetatraderRO trader = traderQueue.poll( 5, TimeUnit.SECONDS );
-
+                LoggerUtils.createDebugLog( "poll following object: " + trader );
                 if ( null != trader )
                 {
                     String[] line = new String[7];
@@ -88,9 +91,11 @@ public class MetatraderCsvWriter
                     line[5] = format.format( trader.getClose() );
                     line[6] = secondFormat.format( Math.round( trader.getVolume() ) );
                     writer.writeNext( line );
+                    LoggerUtils.createDebugLog( "wrote following lines: " + Arrays.toString( line ) );
                 }
                 else
                 {
+                    LoggerUtils.createDebugLog( "finish write process" );
                     break;
                 }
             }
@@ -102,11 +107,12 @@ public class MetatraderCsvWriter
     {
         try
         {
+            LoggerUtils.createInfoLog( "start thread to write the csv file" );
             write();
         }
         catch ( IOException | InterruptedException e )
         {
-            e.printStackTrace();
+            LoggerUtils.createErrorLog( "there is an error by writing the csv file", e );
         }
     }
 }

@@ -109,6 +109,7 @@ public class MetatraderCsvWriter
         {
             LoggerUtils.createInfoLog( "start thread to write the csv file" );
             write();
+            LoggerUtils.createInfoLog( "finished writing" );
         }
         catch ( IOException | InterruptedException e )
         {

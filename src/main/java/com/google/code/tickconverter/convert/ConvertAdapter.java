@@ -133,6 +133,7 @@ public class ConvertAdapter
         {
             LoggerUtils.createInfoLog( "start thread to convert dukascopy to metatrader" );
             convertProcess();
+            LoggerUtils.createInfoLog( "finished converting" );
         }
         catch ( InterruptedException | InvalidTimeException e )
         {

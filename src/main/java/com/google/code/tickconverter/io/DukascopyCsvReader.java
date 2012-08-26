@@ -110,6 +110,7 @@ public class DukascopyCsvReader
         {
             LoggerUtils.createInfoLog( "start thread to read the csv file" );
             read();
+            LoggerUtils.createInfoLog( "finished reading" );
         }
         catch ( IOException | ParseException e )
         {

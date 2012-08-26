@@ -28,6 +28,7 @@ import org.joda.time.Period;
 import com.google.code.tickconverter.bean.IDukascopyRO;
 import com.google.code.tickconverter.bean.IMetatraderRO;
 import com.google.code.tickconverter.bean.MetatraderBean;
+import com.google.code.tickconverter.util.LoggerUtils;
 
 /**
  * This class convert the {@link IDukascopyRO} object of the reference from a {@link BlockingQueue} and create a
@@ -77,11 +78,12 @@ public class ConvertAdapter
         while ( true )
         {
             IDukascopyRO object = dukaQueue.poll( 2, TimeUnit.SECONDS );
+            LoggerUtils.createDebugLog( "poll object: " + object );
             if ( null == object )
             {
                 if ( null != converter && converter.hasElements() )
                 {
-                    traderQueue.put( new MetatraderBean( converter ) );
+                    putMetatraderObject();
                 }
 
                 break;
@@ -104,11 +106,20 @@ public class ConvertAdapter
             }
             catch ( InvalidTimeException e )
             {
-                traderQueue.put( new MetatraderBean( converter ) );
+                putMetatraderObject();
                 converter.incrementInterval();
                 converter.addDukascopy( object );
             }
         }
+    }
+
+    private void putMetatraderObject()
+        throws InterruptedException
+    {
+        LoggerUtils.createDebugLog( "converter has elements" );
+        IMetatraderRO bean = new MetatraderBean( converter );
+        traderQueue.put( bean );
+        LoggerUtils.createDebugLog( "put new object: " + bean );
     }
 
     /*
@@ -120,7 +131,9 @@ public class ConvertAdapter
     {
         try
         {
+            LoggerUtils.createInfoLog( "start thread to convert dukascopy to metatrader" );
             convertProcess();
+            LoggerUtils.createInfoLog( "finished converting" );
         }
         catch ( InterruptedException | InvalidTimeException e )
         {

@@ -18,18 +18,10 @@
  */
 package com.google.code.tickconverter.application;
 
-import java.util.concurrent.LinkedBlockingQueue;
-
 import javax.xml.bind.PropertyException;
 
 import org.apache.commons.cli.ParseException;
 
-import com.google.code.tickconverter.bean.IDukascopyRO;
-import com.google.code.tickconverter.bean.IMetatraderRO;
-import com.google.code.tickconverter.convert.ConvertAdapter;
-import com.google.code.tickconverter.io.DukascopyCsvReader;
-import com.google.code.tickconverter.io.MetatraderCsvWriter;
-import com.google.code.tickconverter.util.AppProperties;
 import com.google.code.tickconverter.util.CommandLineProperties;
 
 /**
@@ -44,15 +36,8 @@ public final class Application
         {
             CommandLineProperties cmd = new CommandLineProperties( args );
             cmd.loadConfigProperties();
-            LinkedBlockingQueue<IDukascopyRO> dukasQueue = new LinkedBlockingQueue<>();
-            LinkedBlockingQueue<IMetatraderRO> metatraderQueue = new LinkedBlockingQueue<>();
-            Thread reader = new Thread( new DukascopyCsvReader( dukasQueue, AppProperties.getInputFile() ) );
-            Thread convert = new Thread( new ConvertAdapter( dukasQueue, metatraderQueue ) );
-            Thread writer = new Thread( new MetatraderCsvWriter( metatraderQueue, AppProperties.getOutputFile() ) );
-
-            reader.start();
-            convert.start();
-            writer.start();
+            Controller controller = new Controller();
+            controller.process();
         }
         catch ( ParseException | PropertyException e )
         {

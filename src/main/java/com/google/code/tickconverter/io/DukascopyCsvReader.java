@@ -33,6 +33,7 @@ import au.com.bytecode.opencsv.CSVReader;
 
 import com.google.code.tickconverter.bean.DukascopyBean;
 import com.google.code.tickconverter.bean.IDukascopyRO;
+import com.google.code.tickconverter.util.AppProperties;
 import com.google.code.tickconverter.util.LoggerUtils;
 
 /**
@@ -80,7 +81,7 @@ public class DukascopyCsvReader
         throws FileNotFoundException, IOException, ParseException
     {
         LoggerUtils.createInfoLog( "read from file: " + filename );
-        SimpleDateFormat dateFormat = new SimpleDateFormat( "dd.MM.yyyy HH:mm:ss.SSS" );
+        SimpleDateFormat dateFormat = new SimpleDateFormat( AppProperties.getDatePattern() );
         GregorianCalendar cal = new GregorianCalendar();
         try (CSVReader reader = new CSVReader( new FileReader( filename ) ))
         {

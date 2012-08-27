@@ -71,4 +71,15 @@ public final class AppProperties
         return properties.getProperty( ConfigProperties.LOGLEVEL.getConfigName(),
                                        ConfigProperties.LOGLEVEL.getDefaultValue() );
     }
+
+    /**
+     * Returns the date pattern to parse the correct date
+     * 
+     * @return
+     */
+    public static String getDatePattern()
+    {
+        return properties.getProperty( ConfigProperties.DATEPATTERN.getConfigName(),
+                                       ConfigProperties.DATEPATTERN.getDefaultValue() );
+    }
 }

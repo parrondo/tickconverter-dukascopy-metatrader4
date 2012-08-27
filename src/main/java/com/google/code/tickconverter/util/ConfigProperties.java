@@ -62,7 +62,16 @@ public enum ConfigProperties
     LOGLEVEL(
         "app.loglevel",
         OptionBuilder.withLongOpt( "loglevel" ).withDescription( "loglevel for the console logging" ).withArgName( "LEVEL" ).hasArg().create( 'l' ),
-        "info" );
+        "info" ),
+
+    /**
+     * The input file date pattern.
+     */
+    @SuppressWarnings( "static-access" )
+    DATEPATTERN(
+        "app.datepattern",
+        OptionBuilder.withLongOpt( "datepattern" ).withDescription( "date patter to specify the date format from input file like dd.MM.yyyy HH:mm:ss.SSS" ).withArgName( "PATTER" ).hasArg().create( 'p' ),
+        "dd.MM.yyyy HH:mm:ss.SSS" );
 
     private final String longName;
 

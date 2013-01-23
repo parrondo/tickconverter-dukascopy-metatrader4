@@ -30,6 +30,7 @@
 						<exclude>LICENSE.txt</exclude>
 						<exclude>**/*.csv</exclude>
 						<exclude>.gitignore</exclude>
+						<exclude>**/*.properties</exclude>
 					</excludes>
 					<useDefaultExcludes>true</useDefaultExcludes>
 				</configuration>

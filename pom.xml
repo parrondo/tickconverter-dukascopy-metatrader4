@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.google.code</groupId>
 	<artifactId>tickconverter-dukascopy-metatrader4</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<name>Tickconverter</name>
 	<repositories>
 		<repository>
@@ -30,6 +30,7 @@
 						<exclude>LICENSE.txt</exclude>
 						<exclude>**/*.csv</exclude>
 						<exclude>.gitignore</exclude>
+						<exclude>**/*.properties</exclude>
 					</excludes>
 					<useDefaultExcludes>true</useDefaultExcludes>
 				</configuration>

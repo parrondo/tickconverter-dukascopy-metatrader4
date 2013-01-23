@@ -73,7 +73,7 @@ public class ConvertAdapter
      *             the new object after the creation of a new {@link MetatraderBean}
      */
     public void convertProcess()
-        throws InterruptedException, InvalidTimeException
+        throws InterruptedException
     {
         while ( true )
         {
@@ -107,8 +107,23 @@ public class ConvertAdapter
             catch ( InvalidTimeException e )
             {
                 putMetatraderObject();
+                incrementWhileAdd( object );
+            }
+        }
+    }
+
+    private void incrementWhileAdd( final IDukascopyRO object )
+    {
+        while ( true )
+        {
+            try
+            {
                 converter.incrementInterval();
                 converter.addDukascopy( object );
+                break;
+            }
+            catch ( InvalidTimeException e )
+            {
             }
         }
     }
@@ -135,9 +150,9 @@ public class ConvertAdapter
             convertProcess();
             LoggerUtils.createInfoLog( "finished converting" );
         }
-        catch ( InterruptedException | InvalidTimeException e )
+        catch ( InterruptedException e )
         {
-            e.printStackTrace();
+
         }
     }
 }

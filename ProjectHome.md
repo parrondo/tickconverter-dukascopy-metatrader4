@@ -1,0 +1,1 @@
+Historical tick data conversion for use in MetaTrader4.
